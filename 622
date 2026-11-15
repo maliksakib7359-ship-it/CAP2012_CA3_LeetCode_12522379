@@ -1,0 +1,57 @@
+class MyCircularQueue {
+private:
+    vector<int> buffer;
+    int head;
+    int count;
+    int capacity;
+
+public:
+    MyCircularQueue(int k) {
+        capacity = k;
+        buffer.resize(k);
+        head = 0;
+        count = 0;
+    }
+    
+    bool enQueue(int value) {
+        if (isFull()) {
+            return false;
+        }
+        int rearIndex = (head + count) % capacity;
+        buffer[rearIndex] = value;
+        count++;
+        return true;
+    }
+    
+    bool deQueue() {
+        if (isEmpty()) {
+            return false;
+        }
+        head = (head + 1) % capacity;
+        count--;
+        return true;
+    }
+    
+    int Front() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return buffer[head];
+    }
+    
+    int Rear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        int rearIndex = (head + count - 1) % capacity;
+        return buffer[rearIndex];
+    }
+    
+    bool isEmpty() {
+        return count == 0;
+    }
+    
+    bool isFull() {
+        return count == capacity;
+    }
+};
